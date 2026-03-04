@@ -76,7 +76,50 @@ The model also generates a **Hiring Risk Score (0–100)**.
 
 ---
 
-# 5. Model Details
+# 5. System Architecture
+
+The HireSafe system follows a simple Machine Learning deployment pipeline.
+
+```
+          User / Frontend
+                 │
+                 │  Company Data Input
+                 ▼
+           Flask API (Backend)
+                 │
+                 │  Feature Processing
+                 ▼
+         Trained ML Model (RandomForest)
+                 │
+                 │  Prediction + Probability
+                 ▼
+        Hiring Status + Risk Score
+                 │
+                 ▼
+           Dashboard / UI Display
+```
+
+### Workflow
+
+1. User inputs company-related data through the interface.
+2. The request is sent to the Flask API endpoint `/predict`.
+3. The API loads the trained **RandomForest model**.
+4. The model predicts the **hiring status**.
+5. Prediction probabilities are converted into a **Risk Score (0–100)**.
+6. The result is returned to the frontend dashboard.
+
+### Output Example
+
+```
+Company: XYZ Tech
+Prediction: Freeze
+Risk Score: 30.99
+Risk Level: Low Risk
+```
+
+---
+
+# 6. Model Details
 
 Model Used:
 
@@ -91,7 +134,7 @@ Why Random Forest?
 
 ---
 
-# 6. Risk Score System
+# 7. Risk Score System
 
 The system converts model probabilities into a **Hiring Risk Score (0–100)**.
 
@@ -111,7 +154,7 @@ Risk Level: Moderate Risk
 
 ---
 
-# 7. Project Structure
+# 8. Project Structure
 
 ```
 HireSafe/
@@ -129,7 +172,7 @@ HireSafe/
 
 ---
 
-# 8. Running the API
+# 9. Running the API
 
 1. Navigate to the API folder
 
@@ -157,7 +200,7 @@ http://127.0.0.1:5000
 
 ---
 
-# 9. API Endpoint
+# 10. API Endpoint
 
 POST request:
 
@@ -188,7 +231,7 @@ Example Output:
 
 ---
 
-# 10. Visualizations
+# 11. Visualizations
 
 The project includes analytical visualizations such as:
 
@@ -201,7 +244,7 @@ These help understand **which factors influence hiring stability**.
 
 ---
 
-# 11. Future Improvements
+# 12. Future Improvements
 
 1. Integrate real-time financial APIs
 2. Add company search interface
@@ -210,6 +253,6 @@ These help understand **which factors influence hiring stability**.
 
 ---
 
-# 12. License
+# 13. License
 
 This project is for educational and research purposes.
