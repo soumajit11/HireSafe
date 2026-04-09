@@ -256,3 +256,35 @@ These help understand **which factors influence hiring stability**.
 # 13. License
 
 This project is for educational and research purposes.
+
+
+## 14. Frontend Experience
+
+A full interactive frontend is included via Flask templates/static assets.
+
+### Pages
+
+1. Landing hero section with product messaging
+2. Prediction tool with validated inputs and result card
+3. Analytics dashboard with risk charts
+4. Model info section with architecture flow
+
+### Frontend Features
+
+- Circular risk gauge with color-coded levels
+- Animated risk score counter
+- Prediction, risk level, and explanation panel
+- Dashboard charts (distribution, stability ranking, heatmap-like bubble plot, feature importance)
+
+### Run Full App (API + UI)
+
+```
+cd api
+python app.py
+```
+
+Then open:
+
+```
+http://127.0.0.1:5000
+```

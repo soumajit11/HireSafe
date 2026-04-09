@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HireSafe | Hiring Risk Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">HireSafe</div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#predict">Predict</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#about">Model Info</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero section">
+      <div class="hero-content">
+        <p class="eyebrow">AI Hiring Risk Intelligence</p>
+        <h1>Predict Company Hiring Stability Before You Apply.</h1>
+        <p class="subtext">Turn raw financial and workforce signals into a clear hiring-risk decision with an interactive, startup-grade dashboard.</p>
+        <a href="#predict" class="cta">Check Hiring Risk</a>
+      </div>
+    </section>
+
+    <section id="predict" class="section">
+      <h2>Hiring Risk Prediction Tool</h2>
+      <div class="predict-layout">
+        <form id="predictionForm" class="card form-card">
+          <h3>Input Signals</h3>
+          <label>Layoff Count
+            <input type="number" name="layoff_count" min="0" required />
+          </label>
+          <label>Stock Price Change (7 days, %)
+            <input type="number" name="stock_price_change_7d" step="0.01" required />
+          </label>
+          <label>Revenue Growth (%)
+            <input type="number" name="revenue_growth_percent" step="0.01" required />
+          </label>
+          <label>Market Cap (Billion USD)
+            <input type="number" name="market_cap_billion_usd" min="0" step="0.01" required />
+          </label>
+          <label>Total Funding (Million USD)
+            <input type="number" name="total_funding_million_usd" min="0" step="0.01" required />
+          </label>
+          <button id="predictBtn" type="submit">Run Prediction</button>
+          <p id="formStatus" class="status"></p>
+        </form>
+
+        <div class="card result-card">
+          <h3>Prediction Output</h3>
+          <div class="result-grid">
+            <div class="gauge-wrap">
+              <div id="riskGauge" class="gauge" style="--value: 0; --gauge-color:#22c55e;">
+                <span id="riskScoreValue">0.0</span>
+              </div>
+              <p>Risk Score</p>
+            </div>
+            <div>
+              <p class="label">Prediction</p>
+              <p id="predictionValue" class="value">-</p>
+              <p class="label">Risk Level</p>
+              <p id="riskLevelValue" class="value">-</p>
+            </div>
+          </div>
+          <div class="explain-box">
+            <p class="label">AI Explanation</p>
+            <p id="explanationValue">Submit company data to get an interpretable explanation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="dashboard" class="section">
+      <h2>Risk Analytics Dashboard</h2>
+      <div class="chart-grid">
+        <div class="card chart-card"><h3>Hiring Risk Distribution</h3><canvas id="riskDistribution"></canvas></div>
+         <div class="card chart-card"><h3>Industry vs Company Size Heatmap</h3><canvas id="heatmapChart"></canvas></div>
+        <div class="card chart-card"><h3>Feature Importance</h3><canvas id="featureImportance"></canvas></div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h2>Model & System Information</h2>
+      <div class="about-grid">
+        <div class="card">
+          <h3>Why RandomForest?</h3>
+          <ul>
+            <li>Handles tabular financial/HR features effectively.</li>
+            <li>Robust against overfitting through ensembling.</li>
+            <li>Supports feature importance for interpretability.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Why SMOTE?</h3>
+          <ul>
+            <li>Balances underrepresented hiring states.</li>
+            <li>Improves classifier fairness across classes.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Risk Score Logic</h3>
+          <p>Risk score is derived from model probability of the <b>Slowdown</b> class and scaled to 0–100.</p>
+          <p>0–35: Low, 35–65: Moderate, 65–100: High.</p>
+        </div>
+      </div>
+      <div class="card architecture">
+        <h3>System Architecture</h3>
+        <div class="flow">
+          <span>User Input</span>
+          <span>→ Flask API /predict</span>
+          <span>→ RandomForest Model</span>
+          <span>→ Prediction + Risk Score</span>
+          <span>→ Frontend Insights</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
