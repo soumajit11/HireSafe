@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  hiresafe:
+    build: ./api
+    container_name: hiresafe_app
+    expose:
+      - "5000"
+    restart: always
+
+  nginx:
+    image: nginx:alpine
+    container_name: hiresafe_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - hiresafe
+    restart: always
