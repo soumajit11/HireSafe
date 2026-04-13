@@ -9,16 +9,16 @@ The system provides a **Hiring Status Prediction and Risk Score (0–100)** to h
 
 In recent years, hiring trends have become highly unstable due to:
 
-- Economic fluctuations
-- AI-driven automation
-- Global layoffs
-- Market volatility
+* Economic fluctuations
+* AI-driven automation
+* Global layoffs
+* Market volatility
 
 HireSafe analyzes workforce and financial indicators to predict whether a company is in a:
 
-- **Hiring Phase**
-- **Hiring Freeze**
-- **Slowdown / Layoff Risk**
+* **Hiring Phase**
+* **Hiring Freeze**
+* **Slowdown / Layoff Risk**
 
 The model also generates a **Hiring Risk Score (0–100)**.
 
@@ -38,27 +38,27 @@ The model also generates a **Hiring Risk Score (0–100)**.
 
 **Programming**
 
-- Python
+* Python
 
 **Machine Learning**
 
-- Scikit-learn
-- RandomForestClassifier
-- SMOTE (class balancing)
+* Scikit-learn
+* RandomForestClassifier
+* SMOTE (class balancing)
 
 **Data Processing**
 
-- Pandas
-- NumPy
+* Pandas
+* NumPy
 
 **Visualization**
 
-- Matplotlib
-- Seaborn
+* Matplotlib
+* Seaborn
 
 **Backend**
 
-- Flask API
+* Flask API
 
 ---
 
@@ -69,7 +69,7 @@ The model also generates a **Hiring Risk Score (0–100)**.
 3. Feature Engineering
 4. Label Engineering
 5. Handling Class Imbalance using SMOTE
-6. Model Training using RandomForest
+6. Model Training (RandomForest, XGBoost, Neural Network)
 7. Model Evaluation
 8. Risk Score Generation
 9. API Deployment
@@ -77,8 +77,6 @@ The model also generates a **Hiring Risk Score (0–100)**.
 ---
 
 # 5. System Architecture
-
-The HireSafe system follows a simple Machine Learning deployment pipeline.
 
 ```
           User / Frontend
@@ -99,38 +97,31 @@ The HireSafe system follows a simple Machine Learning deployment pipeline.
            Dashboard / UI Display
 ```
 
-### Workflow
-
-1. User inputs company-related data through the interface.
-2. The request is sent to the Flask API endpoint `/predict`.
-3. The API loads the trained **RandomForest model**.
-4. The model predicts the **hiring status**.
-5. Prediction probabilities are converted into a **Risk Score (0–100)**.
-6. The result is returned to the frontend dashboard.
-
-### Output Example
-
-```
-Company: XYZ Tech
-Prediction: Freeze
-Risk Score: 30.99
-Risk Level: Low Risk
-```
-
 ---
 
-# 6. Model Details
+# 6. Model Details & Comparison
 
-Model Used:
+We experimented with multiple machine learning models:
 
-RandomForestClassifier
+| Model          | Accuracy |
+| -------------- | -------- |
+| XGBoost        | 67%      |
+| Neural Network | 68%      |
+| Random Forest  | 68%      |
 
-Why Random Forest?
+### Final Model: RandomForestClassifier
 
-1. Handles tabular data well
-2. Robust against overfitting
-3. Works well with mixed features
-4. Provides feature importance insights
+### Why Random Forest was chosen?
+
+Even though Neural Network and Random Forest had similar accuracy, Random Forest was selected because:
+
+1. **Better interpretability** (feature importance available)
+2. **Less hyperparameter tuning required**
+3. Works efficiently on **tabular structured data**
+4. More **stable and less sensitive to noise**
+5. Faster training and easier integration into API
+
+👉 Since all models performed similarly, we prioritized **simplicity, interpretability, and reliability**, making Random Forest the best choice.
 
 ---
 
@@ -148,26 +139,38 @@ Risk levels:
 
 Example Output:
 
+```
 Prediction: Freeze
 Risk Score: 61.3
 Risk Level: Moderate Risk
+```
 
 ---
 
 # 8. Project Structure
 
-```
+```plaintext
 HireSafe/
 │
-├── hiresafe.ipynb
-├── hiresafe_ml_dataset.csv
-├── hiresafe_model.pkl
-├── model_features.pkl
+├── api/                         # Flask backend API
+│   ├── app.py                  # Main API file
+│   └── templates/              # Frontend HTML templates (if used)
 │
-├── api/
-│   └── app.py
+├── nginx/                      # Nginx configuration (for deployment)
 │
-└── README.md
+├── docker-compose.yml          # Docker setup for full app deployment
+├── .gitignore                  # Git ignore rules
+├── README.md                   # Project documentation
+│
+├── hiresafe.ipynb              # Main ML model (Random Forest)
+├── hiresafe_neural_network.ipynb  # Neural Network model (comparison)
+├── hiresafe_xgboost.ipynb      # XGBoost model (comparison)
+│
+├── hiresafe_ml_dataset.csv     # Final processed dataset used for training
+├── hiresafe_model.pkl          # Trained Random Forest model
+├── model_features.pkl          # Feature list used in model
+│
+└── test_api.py                 # Script to test API locally
 ```
 
 ---
@@ -244,21 +247,7 @@ These help understand **which factors influence hiring stability**.
 
 ---
 
-# 12. Future Improvements
-
-1. Integrate real-time financial APIs
-2. Add company search interface
-3. Build interactive dashboard
-4. Deploy the system as a web application
-
----
-
-# 13. License
-
-This project is for educational and research purposes.
-
-
-## 14. Frontend Experience
+# 12. Frontend Experience
 
 A full interactive frontend is included via Flask templates/static assets.
 
@@ -271,10 +260,10 @@ A full interactive frontend is included via Flask templates/static assets.
 
 ### Frontend Features
 
-- Circular risk gauge with color-coded levels
-- Animated risk score counter
-- Prediction, risk level, and explanation panel
-- Dashboard charts (distribution, stability ranking, heatmap-like bubble plot, feature importance)
+* Circular risk gauge with color-coded levels
+* Animated risk score counter
+* Prediction, risk level, and explanation panel
+* Dashboard charts (distribution, stability ranking, heatmap, feature importance)
 
 ### Run Full App (API + UI)
 
@@ -288,3 +277,18 @@ Then open:
 ```
 http://127.0.0.1:5000
 ```
+
+---
+
+# 13. Future Improvements
+
+1. Integrate real-time financial APIs
+2. Add company search interface
+3. Build interactive dashboard
+4. Deploy the system as a web application
+
+---
+
+# 14. License
+
+This project is for educational and research purposes.
